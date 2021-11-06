@@ -144,3 +144,4 @@ function game(mat) {
     document.write("</br>");
   }
 }
+//check
