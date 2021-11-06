@@ -1,0 +1,27 @@
+input[type=text] {
+    width: 7px;
+    margin: 3px;
+    border-style: solid;
+    
+}
+output {
+    margin: 3px;
+    
+    
+    padding: 4px;
+}
+
+
+#gameboard { 
+    display: flex;
+   
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    
+   
+}
+.col {
+    flex: 1;
+    
+}
