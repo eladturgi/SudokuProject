@@ -1,0 +1,43 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 68px 68px 78px 68px 68px 78px 68px 68px 78px;
+    grid-template-rows: 68px 68px 78px 68px 68px 78px 68px 68px 78px;
+    background-color: rgb(85, 6, 6);
+    padding: 10px;
+    width: 629px;
+    height: 629px;
+    margin: auto;
+    margin-top: 200px;
+     
+
+}
+
+.grid-item {
+    background-color: rgba(36, 21, 21, 0.8);
+    padding: 2px;
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    font-family: 'Courier New',
+        monospace;
+    font-weight: bold;
+
+    
+}
+.grid-item:hover {
+    transform: scale(1.2);
+}
+input {
+    width: 60px;
+    height: 60px;
+    border: none;
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Courier New',
+        monospace;
+    font-weight: bold;
+}
