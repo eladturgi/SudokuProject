@@ -1,0 +1,108 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  height: 100vh;
+  background: url("img/HomescreenPhoto.jpg") 50% fixed;
+  background-size: cover;
+  margin: 0px;
+}
+
+#logInBox {
+  border: solid 3px ;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: auto;
+  width: 300px;
+  height: 100%;
+  bottom: 0;
+  top: 0;
+  
+}
+
+#title {
+  font-weight: bold;
+  /* border-bottom: solid rgb(22, 255, 1) 3px; */
+  width: 75px;
+  height: 50px;
+  margin: auto;
+  margin-top: 20px;/*10px 10px 30px 10px*/
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#usernameText {
+  letter-spacing: 4px;
+  margin-left: 91px;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: solid rgb(22, 255, 1) 3px;
+  border-top: solid rgb(22, 255, 1) 3px;
+}
+
+#passwordText {
+  margin-left: 92px;
+  color: rgba(255, 255, 255, 0.9);
+  border-top: solid rgb(22, 255, 1) 3px;
+  border-bottom: solid rgb(22, 255, 1) 3px;
+  letter-spacing: 5px;
+}
+
+#usernameField {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none; /*rgb(40, 148, 236);*/
+  height: 25px;
+  border-radius: 0px;
+  width: 75%;
+  height: 6%;
+  margin: 35px;
+  font-size: 20px;
+  margin-top: 50px;
+  border-radius: 2px;
+}
+
+#passwordField {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none; /*rgb(40, 148, 236);*/
+  height: 25px;
+  border-radius: 2px;
+  width: 75%;
+  height: 6%;
+  margin: 35px;
+  font-size: 20px;
+  margin-top: 50px;
+}
+
+::placeholder {
+  font-family: 'Courier New', Courier, monospace;
+  color: rgba(182, 182, 182, 0.8);
+  font-size: 20px;
+  text-align: center;
+}
+
+#submit {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+  letter-spacing: 12px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#logo {
+  margin-top: 25px;
+  width: 150px;
+  height: 150px;
+  margin-left: 70px;
+}
+#error-message { 
+  display: block;
+  text-align: center;
+  font-size: larger;
+  color: red;
+  font-weight: bold;
+  font-family: 'Times New Roman',
+  serif;
+  
+}

@@ -1,0 +1,49 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    height: 100vh;
+    background: url("https://images.pexels.com/photos/4200740/pexels-photo-4200740.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260") 50% fixed;
+    background-size: cover;
+    margin: 0px;
+        text-align: center;
+
+}
+#welcome { 
+    margin-top: 70px;
+    font-family: Serif;
+    font-size: 50px;
+    
+}
+#usernameSpan { 
+    color:  rgb(78, 3, 3);
+ ;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+
+}
+button { 
+    width: 150px;
+    height: 45px;
+    margin-top: 50px;
+     background-color: rgb(78, 3, 3);
+     font-size: larger;
+     font-weight: bold;
+     letter-spacing: 12px;
+     font-family: 'Courier New',
+     Courier,
+     monospace;
+     border-left: burlywood 8px solid;
+          border-right: burlywood 8px solid;
+
+     border-top:none;
+     color: burlywood;
+    
+
+}
+button:hover {
+    box-shadow: 0 20px 20px 0 rgb(0, 0, 0), 0 20px 50px 0 rgba(0, 0, 0, 0.8);
+}
