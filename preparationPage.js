@@ -1,22 +1,20 @@
-let level;
-let blabla = 0;
+//Dynamic welcome to username
+let user = parent.document.URL.substring(
+  parent.document.URL.indexOf("=") + 1,
+  parent.document.URL.length
+);
+document.getElementById("usernameSpan").innerHTML = user;
 
 function renderEasyLevel() {
   document.getElementById("easyButton").onclick = location.href =
-    "gameboard.html";
-  level = Math.floor(length * length * 0.75);
-  blabla++;
+    "gameboard.html?level=EASY";
 }
 
 function renderMediumLevel() {
   document.getElementById("mediumButton").onclick = location.href =
-    "gameboard.html";
-  level = currentLevel = Math.floor(length * length * 0.5);
-  blabla++;
+    "gameboard.html?level=MEDIUM";
 }
 function renderHardLevel() {
   document.getElementById("hardButton").onclick = location.href =
-    "gameboard.html";
-  level = currentLevel = Math.floor(length * length * 0.25);
-  blabla++;
+    "gameboard.html?level=HARD";
 }

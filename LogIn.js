@@ -10,6 +10,6 @@ function login() {
       "The account name or password that you have entered is incorrect.";
   } else {
     document.getElementById("submit").onclick = location.href =
-      "preparationpage.html";
+      "preparationpage.html?user=" + usernameInput;
   }
 }

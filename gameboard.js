@@ -1,89 +1,19 @@
 const length = 9;
+//reads the selected level from the URL (EASY/MEDIUM/HARD)
+let level = parent.document.URL.substring(
+  parent.document.URL.indexOf("=") + 1,
+  parent.document.URL.length
+);
+var sudokuMatrice;
+let levelNum = 0;
+if (level == "EASY") {
+  levelNum = length * length - Math.floor(length * length * 0.75);
+} else if (level == "MEDIUM") {
+  levelNum = length * length - Math.floor(length * length * 0.5);
+} else levelNum = length * length - Math.floor(length * length * 0.25);
 
-function generateGameBoard() {
-  let shownMat = [[], [], [], [], [], [], [], [], []];
-
-  let row = 0;
-  let col = 0;
-  let val = 0;
-  //let counter = 0;
-  let flag = true;
-
-  for (let i = 0; i < level; i++) {
-    flag = true;
-    while (flag) {
-      row = Math.floor(Math.random() * 9); //0-8
-      col = Math.floor(Math.random() * 9); //0-8
-      val = Math.floor(Math.random() * 9) + 1; // 1 - 9
-      if (
-        shownMat[row][col] == undefined &&
-        checkSuitability(shownMat, row, col, val)
-      ) {
-        shownMat[row][col] = val;
-        flag = false;
-        //counter++;
-        console.log(shownMat[row][col] + " " + i);
-      }
-    }
-  }
-
-  printshownMat(shownMat);
-}
-
-function checkSuitability(shownMat, row, col, val) {
-  if (
-    checkRow(shownMat, row, val) &&
-    checkCol(shownMat, col, val) &&
-    checkCube(shownMat, row, col, val)
-  )
-    return true;
-
-  return false;
-}
-function checkRow(shownMat, row, val) {
-  for (let i = 0; i < length; i++) {
-    if (shownMat[row][i] == val) return false;
-  }
-
-  return true;
-}
-function checkCol(shownMat, col, val) {
-  for (let i = 0; i < length; i++) {
-    if (shownMat[i][col] == val) return false;
-  }
-
-  return true;
-}
-function checkCube(shownMat, row, col, val) {
-  let startCubeRow = row - (row % 3);
-  let startCubeCol = col - (col % 3);
-
-  for (let i = startCubeRow; i <= startCubeRow + 2; i++) {
-    for (let j = startCubeCol; j <= startCubeCol + 2; j++) {
-      if (shownMat[i][j] == val) return false;
-    }
-  }
-
-  return true;
-}
-function printshownMat(shownMat) {
-  let counter = 0;
-
-  for (let i = 0; i < length; i++) {
-    for (let j = 0; j < length; j++) {
-      if (shownMat[i][j] == "") {
-        document.write("_,   ");
-      } else {
-        document.write(shownMat[i][j] + ",   ");
-        counter++;
-      }
-    }
-    document.write("</br>");
-  }
-  document.write(counter);
-}
 function generateMatrice() {
-  let sudokuMatrice = [
+  sudokuMatrice = [
     [6, 8, 1, 2, 9, 3, 5, 7, 4],
     [3, 7, 2, 5, 6, 4, 1, 8, 9],
     [4, 9, 5, 8, 7, 1, 2, 3, 6],
@@ -98,7 +28,7 @@ function generateMatrice() {
   let col = 0;
   let flag = true;
   //val = Math.floor(Math.random() * 9) + 1; // 1 - 9
-  for (let i = 0; i < length * length - level; i++) {
+  for (let i = 0; i < levelNum; i++) {
     flag = true;
     while (flag) {
       row = Math.floor(Math.random() * 9); //0-8
@@ -109,25 +39,32 @@ function generateMatrice() {
       }
     }
   }
-  printshownMat(sudokuMatrice);
+
   return sudokuMatrice;
 }
-game(generateMatrice());
 
 function game(mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
-      let rowID = row.toString();
       let box = document.createElement("div");
+      //   let spanForRowSave = document.createElement("span");
+      //   let spanForColSave = document.createElement("span");
 
-      box.setAttribute("rowId", rowID);
-      box.setAttribute("colId", col.toString());
+      //   spanForRowSave.setAttribute("id", row.toString());
+      //   spanForColSave.setAttribute("id", col.toString());
 
+      // box.setAttribute("class", row.toString());
+      // box.setAttribute("class", col.toString());
+      let inputId = row.toString() + "-" + col.toString();
+      box.setAttribute("id", inputId);
       box.setAttribute("class", "grid-item");
       if (mat[row][col] == "") {
         let input = document.createElement("input");
+        input.setAttribute("id", inputId);
         input.setAttribute("class", "input-box");
-        input.setAttribute("oninput", "limitInput()");
+
+        input.setAttribute("oninput", "limitInput();markInput(this);");
+
         box.innerHTML = "";
         document.getElementById("grid-container").appendChild(box);
         box.appendChild(input);
@@ -147,23 +84,137 @@ function game(mat) {
 
 function limitInput() {
   let inputArray = document.getElementsByTagName("input");
-  console.log(inputArray);
-  for (let i = 0; i < length * length - level; i++) {
-    if (
-      !(
-        document.getElementsByTagName("input")[i].value >= 1 &&
-        document.getElementsByTagName("input")[i].value <= 9
-      )
-    ) {
-      if (
-        document.getElementsByTagName("input")[i].value > 9 &&
-        document.getElementsByTagName("input")[i].value % 10 != 0
-      ) {
-        document.getElementsByTagName("input")[i].value =
-          document.getElementsByTagName("input")[i].value % 10;
+
+  for (let i = 0; i < levelNum; i++) {
+    if (!(inputArray[i].value >= 1 && inputArray[i].value <= 9)) {
+      if (inputArray[i].value > 9 && inputArray[i].value % 10 != 0) {
+        inputArray[i].value = inputArray[i].value % 10;
       } else {
-        document.getElementsByTagName("input")[i].value = "";
+        inputArray[i].value = "";
       }
     }
   }
 }
+
+// 0-5
+function markInput(currentInput) {
+  let tempMatrice = sudokuMatrice.slice();
+  setColor("white", tempMatrice);
+  let id = currentInput.id;
+  let row = parseInt(id.substring(0, 1));
+  let col = parseInt(id.substring(2));
+  if (currentInput.value >= 1 && currentInput.value <= 9) {
+    sudokuMatrice[row][col] = parseInt(currentInput.value);
+
+    if (checkSuitability(sudokuMatrice, row, col, currentInput.value)) {
+      setColorForAllMatchValues(
+        sudokuMatrice,
+        "green",
+        currentInput.value,
+        currentInput
+      );
+    } else {
+      setColorForAllMatchValues(
+        sudokuMatrice,
+        "red",
+        currentInput.value,
+        currentInput
+      );
+    }
+  } else {
+    sudokuMatrice[row][col] = "";
+    currentInput.backgroundColor = "white";
+  }
+}
+function setColor(color, mat) {
+  for (let row = 0; row < length; row++) {
+    for (let col = 0; col < length; col++) {
+      if (mat[row][col] == "") {
+        document.getElementById(
+          row.toString() + "-" + col.toString()
+        ).style.backgroundColor = color;
+      } else {
+        document.getElementById(
+          row.toString() + "-" + col.toString()
+        ).style.backgroundColor = "lightblue";
+      }
+    }
+  }
+}
+function setColorForAllMatchValues(sudokuMatrice, color, value, currentInput) {
+  let id = currentInput.id;
+  let i = parseInt(id.substring(0, 1));
+  let j = parseInt(id.substring(2));
+  for (let row = 0; row < length; row++) {
+    for (let col = 0; col < length; col++) {
+      if (
+        sudokuMatrice[row][col] == value &&
+        (row == i ||
+          col == j ||
+          (row - (row % 3) == i - (i % 3) && col - (col % 3) == j - (j % 3)))
+      ) {
+        document.getElementById(
+          row.toString() + "-" + col.toString()
+        ).style.backgroundColor = color;
+      }
+    }
+  }
+}
+
+function checkSuitability(board, row, col, val) {
+  if (
+    checkRow(board, row, col, val) &&
+    checkCol(board, row, col, val) &&
+    checkCube(board, row, col, val)
+  )
+    return true;
+
+  return false;
+}
+function checkRow(board, row, col, val) {
+  for (let i = 0; i < length; i++) {
+    if (i == col) continue;
+    if (board[row][i] == val) return false;
+  }
+
+  return true;
+}
+function checkCol(board, row, col, val) {
+  for (let i = 0; i < length; i++) {
+    if (i == row) continue;
+    if (board[i][col] == val) return false;
+  }
+
+  return true;
+}
+function checkCube(board, row, col, val) {
+  let startCubeRow = row - (row % 3);
+  let startCubeCol = col - (col % 3);
+
+  for (let i = startCubeRow; i <= startCubeRow + 2; i++) {
+    for (let j = startCubeCol; j <= startCubeCol + 2; j++) {
+      if (i == row && j == col) continue;
+      if (board[i][j] == val) return false;
+    }
+  }
+
+  return true;
+}
+function printboard(board) {
+  let counter = 0;
+
+  for (let i = 0; i < length; i++) {
+    for (let j = 0; j < length; j++) {
+      if (board[i][j] == "") {
+        document.write("_,   ");
+      } else {
+        document.write(board[i][j] + ",   ");
+        counter++;
+      }
+    }
+    document.write("</br>");
+  }
+  document.write(counter);
+}
+
+game(generateMatrice());
