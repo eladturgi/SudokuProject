@@ -1,3 +1,6 @@
+body { 
+    background-color: grey;
+}
 .grid-container {
     display: grid;
     grid-template-columns: 68px 68px 78px 68px 68px 78px 68px 68px 78px;

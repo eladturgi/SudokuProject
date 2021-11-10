@@ -1,4 +1,5 @@
 const length = 9;
+
 //reads the selected level from the URL (EASY/MEDIUM/HARD)
 let level = parent.document.URL.substring(
   parent.document.URL.indexOf("=") + 1,
@@ -43,7 +44,7 @@ function generateMatrice() {
   return sudokuMatrice;
 }
 
-function game(mat) {
+function createGrid(mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
       let box = document.createElement("div");
@@ -81,6 +82,7 @@ function game(mat) {
     }
   }
 }
+createGrid(generateMatrice());
 
 function limitInput() {
   let inputArray = document.getElementsByTagName("input");
@@ -96,10 +98,22 @@ function limitInput() {
   }
 }
 
-// 0-5
+var tempMatrice = [[], [], [], [], [], [], [], [], []];
+for (let row = 0; row < length; row++) {
+  for (let col = 0; col < length; col++) {
+    tempMatrice[row][col] = sudokuMatrice[row][col];
+  }
+}
+
+var inputsRecord = new Array();
 function markInput(currentInput) {
-  let tempMatrice = sudokuMatrice.slice();
-  setColor("white", tempMatrice);
+  inputsRecord.forEach((item) => (item.style.backgroundColor = "white"));
+  inputsRecord.push(currentInput);
+  console.log(tempMatrice);
+  console.log(sudokuMatrice);
+
+  setColor("white", tempMatrice, currentInput);
+
   let id = currentInput.id;
   let row = parseInt(id.substring(0, 1));
   let col = parseInt(id.substring(2));
@@ -126,7 +140,7 @@ function markInput(currentInput) {
     currentInput.backgroundColor = "white";
   }
 }
-function setColor(color, mat) {
+function setColor(color, mat, currentInput) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
       if (mat[row][col] == "") {
@@ -142,6 +156,7 @@ function setColor(color, mat) {
   }
 }
 function setColorForAllMatchValues(sudokuMatrice, color, value, currentInput) {
+  currentInput.style.backgroundColor = color;
   let id = currentInput.id;
   let i = parseInt(id.substring(0, 1));
   let j = parseInt(id.substring(2));
@@ -156,6 +171,13 @@ function setColorForAllMatchValues(sudokuMatrice, color, value, currentInput) {
         document.getElementById(
           row.toString() + "-" + col.toString()
         ).style.backgroundColor = color;
+        for (let k = 0; k < inputsRecord.length; k++) {
+          if (
+            inputsRecord[k].id ==
+            document.getElementById(row.toString() + "-" + col.toString()).id
+          )
+            inputsRecord[k].style.backgroundColor = color;
+        }
       }
     }
   }
@@ -216,5 +238,3 @@ function printboard(board) {
   }
   document.write(counter);
 }
-
-game(generateMatrice());
