@@ -28,12 +28,12 @@ function generateMatrice() {
   let row = 0;
   let col = 0;
   let flag = true;
-  //val = Math.floor(Math.random() * 9) + 1; // 1 - 9
+
   for (let i = 0; i < levelNum; i++) {
     flag = true;
     while (flag) {
       row = Math.floor(Math.random() * 9); //0-8
-      col = Math.floor(Math.random() * 9); //0-8
+      col = Math.floor(Math.random() * 9);
       if (sudokuMatrice[row][col] != "") {
         sudokuMatrice[row][col] = "";
         flag = false;
@@ -48,14 +48,7 @@ function createGrid(mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
       let box = document.createElement("div");
-      //   let spanForRowSave = document.createElement("span");
-      //   let spanForColSave = document.createElement("span");
 
-      //   spanForRowSave.setAttribute("id", row.toString());
-      //   spanForColSave.setAttribute("id", col.toString());
-
-      // box.setAttribute("class", row.toString());
-      // box.setAttribute("class", col.toString());
       let inputId = row.toString() + "-" + col.toString();
       box.setAttribute("id", inputId);
       box.setAttribute("class", "grid-item");
@@ -109,10 +102,8 @@ var inputsRecord = new Array();
 function markInput(currentInput) {
   inputsRecord.forEach((item) => (item.style.backgroundColor = "white"));
   inputsRecord.push(currentInput);
-  console.log(tempMatrice);
-  console.log(sudokuMatrice);
 
-  setColor("white", tempMatrice, currentInput);
+  setColor("white", tempMatrice);
 
   let id = currentInput.id;
   let row = parseInt(id.substring(0, 1));
@@ -140,7 +131,7 @@ function markInput(currentInput) {
     currentInput.backgroundColor = "white";
   }
 }
-function setColor(color, mat, currentInput) {
+function setColor(color, mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
       if (mat[row][col] == "") {
@@ -210,8 +201,8 @@ function checkCol(board, row, col, val) {
   return true;
 }
 function checkCube(board, row, col, val) {
-  let startCubeRow = row - (row % 3);
-  let startCubeCol = col - (col % 3);
+  let startCubeRow = row - (row % 3); // 0
+  let startCubeCol = col - (col % 3); // 6
 
   for (let i = startCubeRow; i <= startCubeRow + 2; i++) {
     for (let j = startCubeCol; j <= startCubeCol + 2; j++) {
@@ -237,4 +228,65 @@ function printboard(board) {
     document.write("</br>");
   }
   document.write(counter);
+}
+
+function finish() {
+  console.log(sudokuMatrice);
+  console.log(tempMatrice);
+
+  for (let row = 0; row < length; row++) {
+    for (let col = 0; col < length; col++) {
+      if (tempMatrice[row][col] != "") continue;
+      if (
+        sudokuMatrice[row][col] != "" &&
+        checkSuitability(sudokuMatrice, row, col, sudokuMatrice[row][col])
+      ) {
+        console.log(
+          "im here" +
+            row +
+            " " +
+            col +
+            "value:" +
+            sudokuMatrice[row][col] +
+            "    ---"
+        );
+        continue;
+      } else {
+        console.log("im here" + sudokuMatrice[row][col] + "    ---");
+
+        document.getElementById("game-message-container").style.color = "red";
+        document.getElementById("game-message-container").innerHTML =
+          "You failed! Try better next time.";
+        return;
+      }
+    }
+  }
+  document.getElementById("game-message-container").style.color = "green";
+  document.getElementById("game-message-container").innerHTML =
+    "Well Done! You succeed to complete " + level + " level Sudoku!";
+  setColor("lightblue", tempMatrice);
+  inputsRecord.forEach((item) => (item.style.backgroundColor = "lightblue"));
+}
+
+function again() {
+  document.getElementById("game-message-container").innerHTML =
+    "All inputs been reset!";
+  document.getElementById("game-message-container").color = "black";
+
+  setTimeout(function () {
+    document.getElementById("game-message-container").innerHTML = "";
+  }, 3000);
+
+  for (let row = 0; row < length; row++) {
+    for (let col = 0; col < length; col++) {
+      if (tempMatrice[row][col] == "") {
+        sudokuMatrice[row][col] = "";
+      }
+    }
+  }
+  inputsRecord.forEach((item) => {
+    item.value = "";
+    item.style.backgroundColor = "white";
+  });
+  setColor("white", tempMatrice);
 }

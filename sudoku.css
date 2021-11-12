@@ -1,6 +1,7 @@
-body { 
+body {
     background-color: grey;
 }
+
 .grid-container {
     display: grid;
     grid-template-columns: 68px 68px 78px 68px 68px 78px 68px 68px 78px;
@@ -10,8 +11,8 @@ body {
     width: 629px;
     height: 629px;
     margin: auto;
-    margin-top: 200px;
-     
+    margin-top: 150px;
+
 
 }
 
@@ -29,11 +30,13 @@ body {
         monospace;
     font-weight: bold;
 
-    
+
 }
+
 .grid-item:hover {
     transform: scale(1.2);
 }
+
 .input-box {
     width: 60px;
     height: 60px;
@@ -43,4 +46,38 @@ body {
     font-family: 'Courier New',
         monospace;
     font-weight: bold;
+}
+
+#buttons-container {
+
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+
+.game-buttons {
+
+    font-size: 30px;
+    border-bottom: cadetblue 8px solid;
+    border-bottom-left-radius: 35%;
+    border-bottom-right-radius: 35%;
+
+}
+
+.game-buttons:hover {
+    box-shadow: 0 20px 20px 0 rgb(0, 0, 0),
+        0 20px 50px 0 rgba(0, 0, 0, 1);
+}
+
+#game-message-container {
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Times New Roman',
+        serif;
+
 }
