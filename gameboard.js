@@ -3,15 +3,16 @@ const length = 9;
 //reads the selected level from the URL (EASY/MEDIUM/HARD)
 let level = parent.document.URL.substring(
   parent.document.URL.indexOf("=") + 1,
-  parent.document.URL.length
+  parent.document.URL.indexOf("_")
 );
+let user = parent.document.URL.substring(parent.document.URL.indexOf("_") + 1);
 var sudokuMatrice;
-let levelNum = 0;
+let inputsToFill = 0;
 if (level == "EASY") {
-  levelNum = length * length - Math.floor(length * length * 0.75);
+  inputsToFill = length * length - Math.floor(length * length * 0.75);
 } else if (level == "MEDIUM") {
-  levelNum = length * length - Math.floor(length * length * 0.5);
-} else levelNum = length * length - Math.floor(length * length * 0.25);
+  inputsToFill = length * length - Math.floor(length * length * 0.5);
+} else inputsToFill = length * length - Math.floor(length * length * 0.25);
 
 function generateMatrice() {
   sudokuMatrice = [
@@ -29,7 +30,7 @@ function generateMatrice() {
   let col = 0;
   let flag = true;
 
-  for (let i = 0; i < levelNum; i++) {
+  for (let i = 0; i < inputsToFill; i++) {
     flag = true;
     while (flag) {
       row = Math.floor(Math.random() * 9); //0-8
@@ -44,7 +45,7 @@ function generateMatrice() {
   return sudokuMatrice;
 }
 
-function createGrid(mat) {
+function createGridboard(mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
       let box = document.createElement("div");
@@ -56,31 +57,22 @@ function createGrid(mat) {
         let input = document.createElement("input");
         input.setAttribute("id", inputId);
         input.setAttribute("class", "input-box");
-
         input.setAttribute("oninput", "limitInput();markInput(this);");
-
-        box.innerHTML = "";
         document.getElementById("grid-container").appendChild(box);
         box.appendChild(input);
       } else {
         box.innerHTML = mat[row][col];
         document.getElementById("grid-container").appendChild(box);
       }
-      if (row % 3 == 2 && row != 8) {
-        box.style.borderBottom = "15px black solid";
-      }
-      if (col % 3 == 2 && col != 8) {
-        box.style.borderRight = "15px black solid";
-      }
     }
   }
 }
-createGrid(generateMatrice());
+createGridboard(generateMatrice());
 
 function limitInput() {
   let inputArray = document.getElementsByTagName("input");
 
-  for (let i = 0; i < levelNum; i++) {
+  for (let i = 0; i < inputsToFill; i++) {
     if (!(inputArray[i].value >= 1 && inputArray[i].value <= 9)) {
       if (inputArray[i].value > 9 && inputArray[i].value % 10 != 0) {
         inputArray[i].value = inputArray[i].value % 10;
@@ -97,13 +89,13 @@ for (let row = 0; row < length; row++) {
     tempMatrice[row][col] = sudokuMatrice[row][col];
   }
 }
-
 var inputsRecord = new Array();
+
 function markInput(currentInput) {
   inputsRecord.forEach((item) => (item.style.backgroundColor = "white"));
   inputsRecord.push(currentInput);
 
-  setColor("white", tempMatrice);
+  resetColor("white", tempMatrice);
 
   let id = currentInput.id;
   let row = parseInt(id.substring(0, 1));
@@ -128,10 +120,10 @@ function markInput(currentInput) {
     }
   } else {
     sudokuMatrice[row][col] = "";
-    currentInput.backgroundColor = "white";
+    //currentInput.backgroundColor = "white";
   }
 }
-function setColor(color, mat) {
+function resetColor(color, mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
       if (mat[row][col] == "") {
@@ -213,22 +205,6 @@ function checkCube(board, row, col, val) {
 
   return true;
 }
-function printboard(board) {
-  let counter = 0;
-
-  for (let i = 0; i < length; i++) {
-    for (let j = 0; j < length; j++) {
-      if (board[i][j] == "") {
-        document.write("_,   ");
-      } else {
-        document.write(board[i][j] + ",   ");
-        counter++;
-      }
-    }
-    document.write("</br>");
-  }
-  document.write(counter);
-}
 
 function finish() {
   console.log(sudokuMatrice);
@@ -241,15 +217,6 @@ function finish() {
         sudokuMatrice[row][col] != "" &&
         checkSuitability(sudokuMatrice, row, col, sudokuMatrice[row][col])
       ) {
-        console.log(
-          "im here" +
-            row +
-            " " +
-            col +
-            "value:" +
-            sudokuMatrice[row][col] +
-            "    ---"
-        );
         continue;
       } else {
         console.log("im here" + sudokuMatrice[row][col] + "    ---");
@@ -264,7 +231,7 @@ function finish() {
   document.getElementById("game-message-container").style.color = "green";
   document.getElementById("game-message-container").innerHTML =
     "Well Done! You succeed to complete " + level + " level Sudoku!";
-  setColor("lightblue", tempMatrice);
+  resetColor("lightblue", tempMatrice);
   inputsRecord.forEach((item) => (item.style.backgroundColor = "lightblue"));
 }
 
@@ -288,5 +255,10 @@ function again() {
     item.value = "";
     item.style.backgroundColor = "white";
   });
-  setColor("white", tempMatrice);
+  resetColor("white", tempMatrice);
+}
+
+function changeLevel() {
+  document.getElementById("change-level-btn").onclick =
+    location.href = `preparationPage.html?user=${user}`;
 }

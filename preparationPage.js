@@ -6,15 +6,15 @@ let user = parent.document.URL.substring(
 document.getElementById("usernameSpan").innerHTML = user;
 
 function renderEasyLevel() {
-  document.getElementById("easyButton").onclick = location.href =
-    "gameboard.html?level=EASY";
+  document.getElementById("easyButton").onclick =
+    location.href = `gameboard.html?level=EASY_${user}`;
 }
 
 function renderMediumLevel() {
-  document.getElementById("mediumButton").onclick = location.href =
-    "gameboard.html?level=MEDIUM";
+  document.getElementById("mediumButton").onclick =
+    location.href = `gameboard.html?level=MEDIUM_${user}`;
 }
 function renderHardLevel() {
-  document.getElementById("hardButton").onclick = location.href =
-    "gameboard.html?level=HARD";
+  document.getElementById("hardButton").onclick =
+    location.href = `gameboard.html?level=HARD_${user}`;
 }
