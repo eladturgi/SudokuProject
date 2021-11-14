@@ -11,7 +11,7 @@ body {
     width: 629px;
     height: 629px;
     margin: auto;
-    margin-top: 150px;
+    margin-top: 65px;
 
 
 }
@@ -49,16 +49,18 @@ input:hover {
 }
 
 #buttons-container {
-
-    margin-top: 12px;
+    position: relative;
     display: flex;
     flex-direction: row;
+    height: 100px;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+
 
 }
 
 .game-buttons {
+    margin: 30px;
     font-size: 30px;
     border-bottom: cadetblue 8px solid;
     border-bottom-left-radius: 35%;
@@ -73,14 +75,17 @@ input:hover {
 
 #game-message-container {
 
-
+    position: relative;
+    top: 90px;
     text-align: center;
     font-size: 30px;
     font-weight: bold;
     font-family: 'Times New Roman',
         serif;
+    height: 70px;
 
 }
+
 
 #change-level-container {
     text-align: center;

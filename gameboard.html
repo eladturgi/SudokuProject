@@ -4,20 +4,20 @@
     <link rel="stylesheet" href="sudoku.css" />
   </head>
   <body>
-    <div id="change-level-container">
-      <button
-        onclick="changeLevel()"
-        id="change-level-btn"
-        class="game-buttons"
-      >
-        Change Level
-      </button>
-    </div>
+    <div id="game-message-container"><div class="place-message"></div></div>
 
     <div id="grid-container" class="grid-container"></div>
     <div id="buttons-container">
+      <div>
+        <button
+          onclick="changeLevel()"
+          id="change-level-btn"
+          class="game-buttons"
+        >
+          Change Level
+        </button>
+      </div>
       <div><button onclick="finish()" class="game-buttons">Finish</button></div>
-      <div><output id="game-message-container"></output></div>
       <div><button onclick="again()" class="game-buttons">Again</button></div>
     </div>
   </body>
