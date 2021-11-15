@@ -6,7 +6,7 @@ let level = parent.document.URL.substring(
   parent.document.URL.indexOf("_")
 );
 let user = parent.document.URL.substring(parent.document.URL.indexOf("_") + 1);
-var sudokuMatrice;
+
 let inputsToFill = 0;
 if (level == "EASY") {
   inputsToFill = length * length - Math.floor(length * length * 0.75);
@@ -14,37 +14,20 @@ if (level == "EASY") {
   inputsToFill = length * length - Math.floor(length * length * 0.5);
 } else inputsToFill = length * length - Math.floor(length * length * 0.25);
 
-function generateMatrice() {
-  sudokuMatrice = [
-    [6, 8, 1, 2, 9, 3, 5, 7, 4],
-    [3, 7, 2, 5, 6, 4, 1, 8, 9],
-    [4, 9, 5, 8, 7, 1, 2, 3, 6],
-    [1, 6, 4, 3, 8, 2, 9, 5, 7],
-    [8, 5, 9, 7, 4, 6, 3, 2, 1],
-    [2, 3, 7, 9, 1, 5, 6, 4, 8],
-    [5, 4, 8, 1, 2, 9, 7, 6, 3],
-    [7, 1, 3, 6, 5, 8, 4, 9, 2],
-    [9, 2, 6, 4, 3, 7, 8, 1, 5],
-  ];
-  let row = 0;
-  let col = 0;
-  let flag = true;
-
-  for (let i = 0; i < inputsToFill; i++) {
-    flag = true;
-    while (flag) {
-      row = Math.floor(Math.random() * 9); //0-8
-      col = Math.floor(Math.random() * 9);
-      if (sudokuMatrice[row][col] != "") {
-        sudokuMatrice[row][col] = "";
-        flag = false;
-      }
-    }
-  }
-
-  return sudokuMatrice;
-}
-
+let counterToRowDelete = 0;
+let counterToBoardDelete = 0;
+let sudokuMatrice = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+];
+// create visual board with html eleme
 function createGridboard(mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
@@ -67,8 +50,8 @@ function createGridboard(mat) {
     }
   }
 }
-createGridboard(generateMatrice());
-
+createGridboard(generateBoard());
+//Limit the user input to only 1-9
 function limitInput() {
   let inputArray = document.getElementsByTagName("input");
 
@@ -82,15 +65,16 @@ function limitInput() {
     }
   }
 }
-
+// Create matrice to control over visual representation of the input boxes
 var tempMatrice = [[], [], [], [], [], [], [], [], []];
 for (let row = 0; row < length; row++) {
   for (let col = 0; col < length; col++) {
     tempMatrice[row][col] = sudokuMatrice[row][col];
   }
 }
+//Array that will save all user inputs
 var inputsRecord = new Array();
-
+//Control the colors that shown to the user
 function markInput(currentInput) {
   inputsRecord.forEach((item) => (item.style.backgroundColor = "white"));
   inputsRecord.push(currentInput);
@@ -120,9 +104,9 @@ function markInput(currentInput) {
     }
   } else {
     sudokuMatrice[row][col] = "";
-    //currentInput.backgroundColor = "white";
   }
 }
+//Set input boxes to white and filled boxes to lightblue
 function resetColor(color, mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
@@ -138,6 +122,7 @@ function resetColor(color, mat) {
     }
   }
 }
+//Colors the input to green if placed correctly and red otherwise
 function setColorForAllMatchValues(sudokuMatrice, color, value, currentInput) {
   currentInput.style.backgroundColor = color;
   let id = currentInput.id;
@@ -165,7 +150,7 @@ function setColorForAllMatchValues(sudokuMatrice, color, value, currentInput) {
     }
   }
 }
-
+//Checks if the given number fits
 function checkSuitability(board, row, col, val) {
   if (
     checkRow(board, row, col, val) &&
@@ -205,7 +190,7 @@ function checkCube(board, row, col, val) {
 
   return true;
 }
-
+//Check the user solution and prompt a message
 function finish() {
   console.log(sudokuMatrice);
   console.log(tempMatrice);
@@ -234,7 +219,7 @@ function finish() {
   resetColor("lightblue", tempMatrice);
   inputsRecord.forEach((item) => (item.style.backgroundColor = "lightblue"));
 }
-
+//Reset same grid
 function again() {
   document.getElementById("game-message-container").innerHTML =
     "All inputs been reset!";
@@ -257,8 +242,71 @@ function again() {
   });
   resetColor("white", tempMatrice);
 }
-
+//Returns to preparation page
 function changeLevel() {
   document.getElementById("change-level-btn").onclick =
     location.href = `preparationPage.html?user=${user}`;
+}
+//Step one in generating a unique board
+//Trying to insert a value to the board, from left to right
+//If the value doesnt fit after sum of iterations restart the generation
+function generateBoard() {
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      if (!findNumber(row, col, Math.floor(Math.random() * 9) + 1)) {
+        col = -1;
+        counterToBoardDelete++;
+        if (counterToBoardDelete > 20) {
+          counterToBoardDelete = 0;
+          console.log("delete");
+          sudokuMatrice = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          ];
+          row = 0;
+        }
+      }
+    }
+  }
+  //Deletes values from the board randomly by level selected
+  for (let i = 0; i < inputsToFill; i++) {
+    flag = true;
+    while (flag) {
+      row = Math.floor(Math.random() * 9); //0-8
+      col = Math.floor(Math.random() * 9);
+      if (sudokuMatrice[row][col] != "") {
+        sudokuMatrice[row][col] = "";
+        flag = false;
+      }
+    }
+  }
+  return sudokuMatrice;
+}
+//Try to insert a number to the board.
+//If fails after 40 iterations resets the row
+function findNumber(row, col, ranVal) {
+  if (checkSuitability(sudokuMatrice, row, col, ranVal)) {
+    sudokuMatrice[row][col] = ranVal;
+    return true;
+  }
+  counterToRowDelete += 1;
+  if (counterToRowDelete > 40) {
+    counterToRowDelete = 0;
+    deleteRow(row, col);
+    return false;
+  }
+  return findNumber(row, col, Math.floor(Math.random() * 9) + 1);
+}
+
+function deleteRow(row, col) {
+  for (let i = 0; i <= col; i++) {
+    sudokuMatrice[row][i] = 0;
+  }
 }
