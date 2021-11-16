@@ -27,7 +27,7 @@ let sudokuMatrice = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
-// create visual board with html eleme
+// create visual board with html element
 function createGridboard(mat) {
   for (let row = 0; row < length; row++) {
     for (let col = 0; col < length; col++) {
