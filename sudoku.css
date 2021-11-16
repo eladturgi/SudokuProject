@@ -74,7 +74,6 @@ input:hover {
 }
 
 #game-message-container {
-
     position: relative;
     top: 90px;
     text-align: center;
@@ -115,7 +114,7 @@ input:hover {
         width: 30px;
     }
     #game-message-container {
-        top: 35px;
+        top: 20px;
         font-size: 15px;
         height: 35px;
     
@@ -155,7 +154,6 @@ input:hover {
         top: 12.5px;
         font-size: 5.35px;
         height: 12.5px;
-    
     }
     #buttons-container {
         height: 17.85px;

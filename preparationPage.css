@@ -1,6 +1,6 @@
 body {
     font-family: 'Courier New', Courier, monospace;
-    height: 100vh;
+    height: auto;
     background: url("img/PreperationPagePhoto.jpg") 50% fixed;
     background-size: cover;
     margin: 0px;
@@ -100,4 +100,26 @@ body {
     box-shadow: 5px 20px 20px 5px rgba(0, 0, 0, 0.5), 5px 20px 20px 5px rgba(0, 0, 0, 0.5);
 
     background: url("img/EasyLevel.jpg") 50% fixed;
+}
+
+@media (max-width:1366px) {
+    #easyButton {
+        width: 150px;
+        height: 45px;
+        margin-top: 30px;
+        font-size: large;
+        letter-spacing: 12px;
+    }
+    #mediumButton {
+        margin-top: 30px;
+        font-size: large;
+    }
+    #hardButton {
+        margin-top: 30px;
+        font-size: large;
+    }
+    #welcome {
+        margin-top: 50px;
+        font-size: 30px;
+    }
 }
