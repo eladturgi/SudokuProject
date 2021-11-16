@@ -1,7 +1,7 @@
 body {
     font-family: 'Courier New', Courier, monospace;
     height: 100vh;
-    background: url("https://images.pexels.com/photos/4200740/pexels-photo-4200740.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260") 50% fixed;
+    background: url("img/PreperationPagePhoto.jpg") 50% fixed;
     background-size: cover;
     margin: 0px;
     text-align: center;
@@ -12,11 +12,11 @@ body {
     margin-top: 70px;
     font-family: Serif;
     font-size: 50px;
-
+    color: rgb(22, 255, 1);
 }
 
 #usernameSpan {
-    color: rgb(78, 3, 3);
+    color: rgb(192, 0, 0);
     ;
 }
 
@@ -29,11 +29,29 @@ body {
 
 }
 
-button {
+#hardButton {
     width: 150px;
     height: 45px;
     margin-top: 50px;
-    background-color: rgb(78, 3, 3);
+    background-color: rgb(102, 1, 1);
+    font-size: larger;
+    font-weight: bold;
+    letter-spacing: 12px;
+    font-family: 'Courier New',
+        Courier,
+        monospace;
+    border-left: burlywood 8px solid;
+    border-right: burlywood 8px solid;
+
+    border-top: none;
+    color: burlywood;
+}
+
+#mediumButton {
+    width: 150px;
+    height: 45px;
+    margin-top: 50px;
+    background-color: rgb(17, 18, 134);
     font-size: larger;
     font-weight: bold;
     letter-spacing: 12px;
@@ -46,9 +64,40 @@ button {
     border-top: none;
     color: burlywood;
 
+}
+
+#easyButton {
+    width: 150px;
+    height: 45px;
+    margin-top: 50px;
+    background-color: rgb(9, 121, 37);
+    font-size: larger;
+    font-weight: bold;
+    letter-spacing: 12px;
+    font-family: 'Courier New',
+        Courier,
+        monospace;
+    border-left: burlywood 8px solid;
+    border-right: burlywood 8px solid;
+
+    border-top: none;
+    color: burlywood;
 
 }
 
-button:hover {
-    box-shadow: 0 20px 20px 0 rgb(0, 0, 0), 0 20px 50px 0 rgba(0, 0, 0, 0.5);
+#hardButton:hover {
+    box-shadow: 5px 20px 20px 5px rgba(0, 0, 0, 0.5), 5px 20px 20px 5px rgba(0, 0, 0, 0.5);
+  
+    background: url("img/HardLevel.jpg") 50% fixed;
+}
+
+#mediumButton:hover{
+    box-shadow: 5px 20px 20px 5px rgba(0, 0, 0, 0.5), 5px 20px 20px 5px rgba(0, 0, 0, 0.5);
+    background: url("img/MediumLevel.jpg") 50% fixed;
+}
+
+#easyButton:hover{
+    box-shadow: 5px 20px 20px 5px rgba(0, 0, 0, 0.5), 5px 20px 20px 5px rgba(0, 0, 0, 0.5);
+
+    background: url("img/EasyLevel.jpg") 50% fixed;
 }

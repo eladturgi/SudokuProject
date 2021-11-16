@@ -5,14 +5,24 @@ let level = parent.document.URL.substring(
   parent.document.URL.indexOf("=") + 1,
   parent.document.URL.indexOf("_")
 );
-let user = parent.document.URL.substring(parent.document.URL.indexOf("_") + 1);
 
+let user = parent.document.URL.substring(parent.document.URL.indexOf("_") + 1);
 let inputsToFill = 0;
+
 if (level == "EASY") {
   inputsToFill = length * length - Math.floor(length * length * 0.75);
+  document.body.style.backgroundImage = "url('img/EasyLevel.jpg')";
+  document.body.style.backgroundRepeat = "no-repeat";
 } else if (level == "MEDIUM") {
   inputsToFill = length * length - Math.floor(length * length * 0.5);
-} else inputsToFill = length * length - Math.floor(length * length * 0.25);
+  document.body.style.backgroundImage = "url('img/MediumLevel.jpg')";
+  document.body.style.backgroundRepeat = "no-repeat";
+} else {
+  inputsToFill = length * length - Math.floor(length * length * 0.25);
+  document.body.style.backgroundImage = "url('img/HardLevel.jpg')";
+  document.body.style.backgroundRepeat = "no-repeat";
+}
+
 
 let counterToRowDelete = 0;
 let counterToBoardDelete = 0;
